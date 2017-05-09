@@ -1,39 +1,54 @@
+main.cpp
+
+
+
 #include <iostream>
-#include <stdio.h>
-#include "SaldoNaoDisponivelException.h"
-#include "Conta.h"
-#include<exception>
+#include "TestaValidaNumero.h"
+#include "ValorAbaixoException.h"
+#include "ValorAcimaException.h"
+#include "ValorMuitoAcimaException.h"
+#include<iostream>
+
 using namespace std;
 
 int main()
 {
-    Conta c1;
-    SaldoNaoDisponivelException N;
-    float saldo_atual;
-    float valor;
-    float sd;
-    std::string tipo_conta;
+    TestaValidaNumero c;
+    int num;
+    cout<<"Digite um numero"<<endl;
+    cin>>num;
+    c.SetTestaValidaNumero(num);
 
-    cout<<"Digite o valor que voce deseja sacar"<<endl;
-    cin>>valor;
-    sd = 1000;
+   try{
+    if(c.GetTestaValidaNumero() <= 0){
+        throw(ValorAbaixoException());
+    }
 
+    if(c.GetTestaValidaNumero()>100 && c.GetTestaValidaNumero()<1000){
+        throw(ValorAcimaException());
 
-    try{
-        if(valor > sd){
-
-            throw(SaldoNaoDisponivelException());
         }
 
-            printf("o seu saldo e %f",c1.sacar(valor,sd));
+    if(c.GetTestaValidaNumero()>=1000){
+
+        throw(ValorMuitoAcimaException());
+    }
+  }
+     catch(ValorAbaixoException T){
+
+        T.Msg1();
+     }
+
+     catch(ValorAcimaException E){
+
+        E.Msg2();
     }
 
-    catch(SaldoNaoDisponivelException N){
-        N.msg();
+     catch(ValorMuitoAcimaException W){
+
+        W.Msg3();
     }
-
-
-
-
     return 0;
 }
+
+
